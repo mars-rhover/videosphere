@@ -1,0 +1,25 @@
+﻿@model IEnumerable<WebApplication2.Models.ShoppingCart>
+@using WebApplication2.Models
+
+
+
+<div id="cartPartialViewContainer">
+
+    @{
+        var shoppingCart = Session["ShoppingCart"] as ShoppingCart;
+        if (shoppingCart != null && shoppingCart.Items.Any())
+        {
+            foreach (var itemadded in shoppingCart.Items)
+            {
+                <li>@itemadded.Title - @itemadded.id_Movie</li>
+                @Html.ActionLink("Remove", "RemoveFromCart", "Movies", new { movieId = itemadded.id_Movie }, new { @class = "remove-link", onclick = "return confirm('Are you sure you want to remove this item?');" })
+                @Html.ActionLink("Check Out", "CheckOut", "Movies", new { @class = "remove-link" })
+            }
+        }
+        else
+        {
+            <p>Your shopping cart is empty.</p>
+        }
+    }
+
+</div>

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<WebApplication2.Models.Movie>
+@using WebApplication2.Models
+
+@{
+    ViewBag.Title = "Index";
+
+}
+
+<h2>Index</h2>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>}
+<!--------------------------------------->
+@foreach (var item in Model)
+{
+    <div class="card border-info mb-3" style="max-width: 20rem;">
+        <div class="card-header">@Html.DisplayFor(modelItem => item.Title)</div>
+        <div class="card-body">
+            <h4 class="card-title">@Html.DisplayFor(modelItem => item.Genre)</h4>
+            <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+            <div>
+                @if (!User.IsInRole("Admin"))
+                {
+                    <a class="card-link">@Html.ActionLink("Add to cart ", "AddToCart", new { id = item.id_Movie }) |</a>
+                    <a class="card-link">@Html.ActionLink(" Details", "Details", new { id = item.id_Movie }) </a>
+                }
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="card-link">@Html.ActionLink("Edit", "Edit", new { id = item.id_Movie }) |</a>
+                    <a class="card-link">@Html.ActionLink("Details", "Details", new { id = item.id_Movie }) |</a>
+                    <a class="card-link">@Html.ActionLink("Delete", "Delete", new { id = item.id_Movie })</a>
+                }
+            </div>
+        </div>
+    </div>
+
+
+   
+
+}
+
+
+
+
+
